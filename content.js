@@ -914,6 +914,22 @@ function makeHtml(result, showToneColors) {
     if (result.more) {
         html += '&hellip;<br/>';
     }
+    
+    // the following is a hack to only save the looked up word, without including all single characters
+    // filter texts to only contain longest word (presumably the one added by user)
+    texts.sort(function (t1, t2) {
+        if (t1[0].length > t2[0].length) {
+            return -1;
+        }
+        else if (t1[0].length < t2[0].length) {
+            return 1;
+        } 
+        else {
+            return 0;
+        }
+    })
+    texts = texts.slice(0, 1)
+    // hack end
 
     savedSearchResults = texts;
     savedSearchResults.grammar = result.grammar;
